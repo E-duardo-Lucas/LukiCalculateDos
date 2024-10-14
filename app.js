@@ -1,26 +1,39 @@
 const app = new Vue({
     el: '#app',
     data: {
-        operation: '', // Almacena la operación ingresada
-        result: ''     // Almacena el resultado
+        operation: '',  // Almacena la operación ingresada
+        result: '',     // Almacena el resultado
+        isOpenParenthesis: true  // Controla si el siguiente paréntesis es '(' o ')'
     },
     methods: {
         append(value) {
-            // Si se ingresa un operador, revisa la ley de signos
+            // Si es un operador, maneja la ley de signos
             if (this.isOperator(value)) {
                 this.handleOperators(value);
+            } else if (value === 'parenthesis') {
+                // Lógica para alternar entre '(' y ')'
+                this.toggleParenthesis();
             } else {
                 this.operation += value;
             }
+        },
+        toggleParenthesis() {
+            if (this.isOpenParenthesis) {
+                this.operation += '(';
+            } else {
+                this.operation += ')';
+            }
+            this.isOpenParenthesis = !this.isOpenParenthesis;
         },
         clearInput() {
             // Limpia la operación y el resultado
             this.operation = '';
             this.result = '';
+            this.isOpenParenthesis = true;  // Resetea el estado de los paréntesis
         },
         calculate() {
             try {
-                // Calcula la operación usando eval, para respetar la ley de los signos y los paréntesis
+                // Calcula la operación respetando la ley de los signos y paréntesis
                 this.result = eval(this.operation.replace(/×/g, '*').replace(/÷/g, '/'));
             } catch (error) {
                 this.result = 'Error';
@@ -31,22 +44,19 @@ const app = new Vue({
             this.operation = this.operation.slice(0, -1);
         },
         isOperator(value) {
-            // Revisa si el valor ingresado es un operador
+            // Verifica si el valor es un operador
             return ['+', '-', '*', '/'].includes(value);
         },
         handleOperators(value) {
-            // Reemplaza operadores incorrectos si se intenta poner un operador después de otro
             const lastChar = this.operation.slice(-1);
 
             if (lastChar === '+' || lastChar === '-') {
-                // Si hay un '+' o '-' antes, y se ingresa '*' o '/', reemplaza el anterior
                 if (value === '*' || value === '/') {
                     this.operation = this.operation.slice(0, -1) + value;
                 } else {
                     this.operation += value;
                 }
             } else if (lastChar === '*' || lastChar === '/') {
-                // Si hay un '*' o '/' antes, y se ingresa un '+' o '-', reemplaza el anterior
                 if (value === '+' || value === '-') {
                     this.operation = this.operation.slice(0, -1) + value;
                 } else {

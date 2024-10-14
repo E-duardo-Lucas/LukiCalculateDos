@@ -19,41 +19,58 @@ body {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
-#display, #result {
-    width: 100%;
+#display {
+    width: 90%;
     padding: 10px;
     font-size: 24px;
     margin-bottom: 20px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 10px;
+    text-align: right;
+}
+
+#result {
+    width: 90%;
+    padding: 10px;
+    font-size: 24px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 10px;
     text-align: right;
 }
 
 #buttons {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
+    grid-template-columns: repeat(4, 1fr); /* 4 columnas de igual tamaño */
+    grid-gap: 10px;
+}
+
+/* Botón + que ocupará dos filas */
+button.plus {
+    grid-row: span 2;  /* Hace que el botón + abarque dos filas */
+    background-color: #058a69; /* Color de fondo opcional */
+    color: white;  /* Color del texto opcional */
+    font-size: 24px;  /* Tamaño del texto opcional */
+}
+
+button.equal {
+    grid-column: span 2; 
+    background-color: #2e8dcc; /* Color de fondo opcional */
+    color: white; /* Color del texto opcional */
+}
+
+button.number {
+    background-color: #000000; /* Color de fondo para los números */
+    color: white;              /* Color de texto para los números */
 }
 
 button {
     padding: 20px;
     font-size: 18px;
-    background-color: #28a745;
+    background-color: #5f5f5f;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
-}
-
-button:hover {
-    background-color: #218838;
-}
-
-button:nth-child(4n+1) {
-    background-color: #007bff;
-}
-
-button:nth-child(4n+1):hover {
-    background-color: #0056b3;
 }
