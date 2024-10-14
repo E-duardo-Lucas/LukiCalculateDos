@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <h1>Calculadora</h1>
+        <input type="text" v-model="operation" placeholder="0" readonly id="display">
+        <input type="text" v-model="result" placeholder="Resultado" readonly id="result">
+
+        <div id="buttons">
+            <button @click="append('1')">1</button>
+            <button @click="append('2')">2</button>
+            <button @click="append('3')">3</button>
+            <button @click="append('+')">+</button>
+
+            <button @click="append('4')">4</button>
+            <button @click="append('5')">5</button>
+            <button @click="append('6')">6</button>
+            <button @click="append('-')">-</button>
+
+            <button @click="append('7')">7</button>
+            <button @click="append('8')">8</button>
+            <button @click="append('9')">9</button>
+            <button @click="append('/')">÷</button>
+
+            <button @click="append('(')">(</button>
+            <button @click="append('0')">0</button>
+            <button @click="append(')')">)</button>
+            <button @click="append('*')">×</button>
+
+            <button @click="clearInput">C</button>
+            <button @click="calculate">=</button>
+            <button @click="backspace">←</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script src="app.js"></script>
+</body>
+</html>
