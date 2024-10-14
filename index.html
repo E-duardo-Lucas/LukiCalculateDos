@@ -8,34 +8,43 @@
 </head>
 <body>
     <div id="app">
-        <input type="text" v-model="operation" placeholder="0" readonly id="display">
+        <input type="text" v-model="operation" placeholder="0" id="display">
         <input type="text" v-model="result" placeholder="Resultado" readonly id="result">
 
+
         <div id="buttons">
+            <button>{2}</button>
+            <button>{3}</button>
+            <button>{4}</button>
+            <button>{1}</button>
+                                  
+        
+            <button @click="clearInput">C</button>     
+            <button @click="append('/')">÷</button>                               
+            <button @click="append('*')">×</button>                                     
+            <button @click="backspace">←</button>                                          
+            
             <button @click="append('7')" class="number">7</button>
             <button @click="append('8')" class="number">8</button>
             <button @click="append('9')" class="number">9</button>
-            <button @click="backspace">←</button>                       
-        
+               
+            <button @click="append('-')">-</button>                   
+                                                            
             <button @click="append('4')" class="number">4</button>
             <button @click="append('5')" class="number">5</button>
             <button @click="append('6')" class="number">6</button>
-            <button @click="append('/')">÷</button>                         
-        
+
+            <button @click="append('+')" class="plus">+</button>
+
             <button @click="append('1')" class="number">1</button>
             <button @click="append('2')" class="number">2</button>
-            <button @click="append('3')" class="number">3</button>
-            <button @click="append('*')">×</button>                       
-        
-            <button @click="append('parenthesis')">( / )</button> <!-- Botón que alterna entre '(' y ')' -->
+            <button @click="append('3')" class="number">3</button>   
+
+            <button @click="append('parenthesis')">( / )</button>
             <button @click="append('0')" class="number">0</button>
-            <button @click="append('-')">-</button> 
-        
-            <button @click="append('+')" class="plus">+</button> <!-- Botón + que abarcará dos filas -->
-            
-            <button @click="clearInput">C</button>
+            <button @click="append('.')">.</button>
             <button @click="calculate" class="equal">=</button>
-        </div>            
+        </div>                
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>

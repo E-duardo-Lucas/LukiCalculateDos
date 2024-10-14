@@ -13,6 +13,12 @@ const app = new Vue({
             } else if (value === 'parenthesis') {
                 // Lógica para alternar entre '(' y ')'
                 this.toggleParenthesis();
+            } else if (value === '.') {
+                // Lógica para manejar puntos decimales
+                const lastNumber = this.operation.split(/[\+\-\*\/\(\)]/).pop(); // Toma el último número antes de un operador
+                if (!lastNumber.includes('.')) {
+                    this.operation += value;
+                }
             } else {
                 this.operation += value;
             }
