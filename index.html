@@ -12,16 +12,11 @@
         <input type="text" v-model="result" placeholder="Resultado" readonly id="result">
         <input type="number" v-model="barcode" placeholder="Escanear Código" id="checkBarcode" @keyup.enter="scanBarcode(barcode)">
 
-        <div id="buttons">
-            <button @click="append('2')">2</button>
-            <button @click="append('3')">3</button>
-            <button @click="append('4')">4</button>
-            <button @click="append('1')">1</button>
-            
+        <div id="buttons">            
             <button @click="clearInput">C</button>
             <button @click="append('/')">÷</button>
             <button @click="append('*')">×</button>
-            <button @click="backspace">←</button>
+            <button @click="backspace">⌫</button>
             
             <button @click="append('7')" class="number">7</button>
             <button @click="append('8')" class="number">8</button>
@@ -39,10 +34,10 @@
             <button @click="append('2')" class="number">2</button>
             <button @click="append('3')" class="number">3</button>
             
-            <button @click="append('parenthesis')">( / )</button>
+            <button @click="append('%')">%</button>
             <button @click="append('0')" class="number">0</button>
             <button @click="append('.')">.</button>
-            <button @click="calculate" class="equal">=</button>
+            <button @click="calculateAndContinue" class="equal">=</button>
         </div>                
     </div>
 

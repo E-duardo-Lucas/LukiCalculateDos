@@ -16,6 +16,7 @@ body {
     border-radius: 10px;
     width: 90%;
     max-width: 400px;
+    max-height: 90%;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -61,12 +62,13 @@ button.plus {
     grid-row: span 2;  /* Hace que el botón + abarque dos filas */
     background-color: #058a69; /* Color de fondo opcional */
     color: white;  /* Color del texto opcional */
-    font-size: 34px;  /* Tamaño del texto opcional */
+    font-size: 35px;  /* Tamaño del texto opcional */
 }
 
 button.equal {     
     background-color: #2e8dcc; /* Color de fondo opcional */
     color: white; /* Color del texto opcional */
+    font-size: 30px;
 }
 
 button.number {
@@ -77,7 +79,7 @@ button.number {
 
 button {
     padding: 20px;
-    font-size: 18px;
+    font-size: 25px;
     background-color: #5f5f5f;
     color: white;
     border: none;
