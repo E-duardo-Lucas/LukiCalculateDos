@@ -30,62 +30,46 @@ const app = new Vue({
             localStorage.removeItem('temporaryDB'); // Elimina el almacenamiento temporal
         },
         calculate() {
-            try {
-                // Cambia el % a /100 para calcular el porcentaje
-                const finalOperation = this.operation
-                    .replace(/×/g, '*')
-                    .replace(/÷/g, '/')
-                    .replace(/%/g, '/100')
-                    .trim(); // Elimina espacios al principio y final
-                
-                // Elimina operadores al final de la operación
-                const cleanedOperation = finalOperation.replace(/[+\-*/]$/, ''); 
-
-                // Asegúrate de que hay al menos un número antes de evaluar
-                if (cleanedOperation) {
-                    this.result = eval(cleanedOperation); // Evalúa la operación
-                } else {
-                    this.result = 'Error'; // Muestra error si no hay operación válida
+            const finalOperation = this.cleanOperation(this.operation);
+            if (finalOperation) {
+                try {
+                    this.result = eval(finalOperation); // Evalúa la operación
+                } catch (error) {
+                    this.result = 'Error'; // Muestra error en caso de fallo en la evaluación
                 }
-            } catch (error) {
-                this.result = 'Error'; // Muestra error en caso de fallo en la evaluación
+            } else {
+                this.result = 'Error'; // Muestra error si no hay operación válida
             }
         },
+        cleanOperation(operation) {
+            return operation
+                .replace(/×/g, '*')
+                .replace(/÷/g, '/')
+                .replace(/%/g, '/100')
+                .replace(/[+\-*/]$/, '') // Elimina operadores al final
+                .trim(); // Elimina espacios al principio y final
+        },
         calculateAndContinue() {
-            try {
-                // Cambia el % a /100 para calcular el porcentaje
-                const finalOperation = this.operation
-                    .replace(/×/g, '*')
-                    .replace(/÷/g, '/')
-                    .replace(/%/g, '/100')
-                    .trim(); // Elimina espacios al principio y final
-                
-                // Elimina operadores al final de la operación
-                const cleanedOperation = finalOperation.replace(/[+\-*/]$/, ''); 
-
-                // Asegúrate de que hay al menos un número antes de evaluar
-                if (cleanedOperation) {
-                    const result = eval(cleanedOperation); // Evalúa la operación
+            const finalOperation = this.cleanOperation(this.operation);
+            if (finalOperation) {
+                try {
+                    const result = eval(finalOperation); // Evalúa la operación
                     this.result = result; // Guarda el resultado
                     this.operation = result.toString(); // Actualiza la operación con el resultado para seguir operando
 
                     // Guardar en historialDB
                     const date = new Date().toLocaleString(); // Fecha actual
-                    const historyItem = {
-                        operation: this.operation,
-                        result: this.result,
-                        date: date
-                    };
+                    const historyItem = { operation: this.operation, result: this.result, date: date };
                     this.historial.push(historyItem);
                     localStorage.setItem('historialDB', JSON.stringify(this.historial));
 
                     // Limpiar temporaryDB al finalizar operación
                     localStorage.removeItem('temporaryDB');
-                } else {
-                    this.result = 'Error'; // Muestra error si no hay operación válida
+                } catch (error) {
+                    this.result = 'Error'; // Muestra error en caso de fallo en la evaluación
                 }
-            } catch (error) {
-                this.result = 'Error'; // Muestra error en caso de fallo en la evaluación
+            } else {
+                this.result = 'Error'; // Muestra error si no hay operación válida
             }
         },
         backspace() {
@@ -97,18 +81,7 @@ const app = new Vue({
         scanBarcode(barcode) {
             const product = this.entrada.find(item => item.cBarras === barcode);
             if (product) {
-                if (this.operation.length > 0) {
-                    if (this.isOperator(this.operation.slice(-1))) {
-                        // Si hay un operador al final, añade solo el precio sin operador
-                        this.operation += `${product.precio}`;
-                    } else {
-                        // Si no hay un operador al final, añade el precio con '+'
-                        this.operation += ` + ${product.precio}`;
-                    }
-                } else {
-                    // Si no hay nada en la operación, añade solo el precio sin operador
-                    this.operation += `${product.precio}`;
-                }
+                this.addPriceToOperation(product.precio);
                 this.barcode = ''; // Limpia el campo de código de barras después de usarlo
                 this.calculate(); // Recalcula después de agregar el precio
                 this.scrollToEnd(); // Desplaza el input hacia la derecha
@@ -118,11 +91,15 @@ const app = new Vue({
                 this.barcode = '';
             }
         },
+        addPriceToOperation(price) {
+            if (this.operation.length > 0) {
+                this.operation += this.isOperator(this.operation.slice(-1)) ? `${price}` : ` + ${price}`;
+            } else {
+                this.operation += `${price}`;
+            }
+        },
         updateTemporaryDB() {
-            const temporaryItem = {
-                operation: this.operation,
-                result: this.result
-            };
+            const temporaryItem = { operation: this.operation, result: this.result };
             localStorage.setItem('temporaryDB', JSON.stringify(temporaryItem));
         },
         scrollToEnd() {
@@ -136,15 +113,12 @@ const app = new Vue({
         }
     },
 
-    created: function() {
-        let historialDB = JSON.parse(localStorage.getItem('historialDB'));
-        if (historialDB === null) {
-            this.historial = [];
-        } else {
-            this.historial = historialDB;
-        }
-        let temporaryDB = JSON.parse(localStorage.getItem('temporaryDB'));
-        if (temporaryDB !== null) {
+    created() {
+        const historialDB = JSON.parse(localStorage.getItem('historialDB')) || [];
+        this.historial = historialDB;
+
+        const temporaryDB = JSON.parse(localStorage.getItem('temporaryDB'));
+        if (temporaryDB) {
             this.operation = temporaryDB.operation;
             this.result = temporaryDB.result;
         }    
