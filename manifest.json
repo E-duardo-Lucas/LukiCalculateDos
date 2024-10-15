@@ -4,7 +4,23 @@
     "start_url": "/index.html",
     "display": "standalone",
     "background_color": "#ffffff",
-    "theme_color": "#686868"
-    
+    "theme_color": "#686868",
+    "icons": [
+      {
+        "src": "/lukiCalculator.ico",
+        "sizes": "48x48 72x72 96x96 128x128 256x256", 
+        "type": "image/x-icon"
+      },
+      {
+        "src": "/lukiCalculator-192.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      },
+      {
+        "src": "/lukiCalculator-512.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ]
   }
   
