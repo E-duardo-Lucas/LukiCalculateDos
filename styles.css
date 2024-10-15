@@ -22,14 +22,24 @@ body {
 #display {
     width: 90%;
     padding: 10px;
-    font-size: 24px;
-    margin-bottom: 20px;
+    font-size: 30px;
+    margin-bottom: 5px;
     border: 1px solid #ccc;
     border-radius: 10px;
     text-align: right;
 }
 
 #result {
+    width: 90%;
+    padding: 10px;
+    font-size: 24px;
+    margin-bottom: 5px;
+    border: none;
+    border-radius: 10px;
+    text-align: right;
+}
+
+#checkBarcode {
     width: 90%;
     padding: 10px;
     font-size: 24px;
@@ -60,7 +70,7 @@ button.equal {
 }
 
 button.number {
-    font-size: 24px;
+    font-size: 30px;
     background-color: #000000; /* Color de fondo para los números */
     color: white;              /* Color de texto para los números */
 }
