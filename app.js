@@ -10,7 +10,6 @@ const app = new Vue({
             // Puedes agregar más productos aquí
         ], // Lista de productos con código de barras
         historial: [],  // Almacena el historial de operaciones
-        temporary: [],  // Almacena temporalmente la operación actual y el resultado
     },
     methods: {
         append(value) {
@@ -123,7 +122,7 @@ const app = new Vue({
                 operation: this.operation,
                 result: this.result
             };
-            localStorage.setItem('temporaryDB', JSON.stringify(temporaryItem));
+            localStorage.setItem('temporaryDB', JSON.stringify(temporaryItem)); // Guarda temporalmente la operación y resultado
         },
         scrollToEnd() {
             const displayInput = document.getElementById('display'); // Obtiene el elemento del input
@@ -154,17 +153,7 @@ const app = new Vue({
         this.loadTemporaryDB(); // Carga datos temporales al iniciar
         this.loadHistorial(); // Carga historial al iniciar
     },
-    created: function() {
-        let historialDB = JSON.parse(localStorage.getItem('historialDB'));
-        if (historialDB === null) {
-            this.historial = [];
-        } else {
-            this.historial = historialDB;
-        }
-        let temporaryDB = JSON.parse(localStorage.getItem('temporaryDB'));
-        if (temporaryDB !== null) {
-            this.operation = temporaryDB.operation;
-            this.result = temporaryDB.result;
-        }    
+    created() {
+        this.loadHistorial(); // Carga historial al iniciar
     }
 });
