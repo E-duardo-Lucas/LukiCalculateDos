@@ -153,28 +153,18 @@ const app = new Vue({
     mounted() {
         this.loadTemporaryDB(); // Carga datos temporales al iniciar
         this.loadHistorial(); // Carga historial al iniciar
-    
-        // Verificar si localStorage está disponible
-        if (typeof(Storage) !== "undefined") {
-            console.log("localStorage está disponible.");
+    },
+    created: function() {
+        let historialDB = JSON.parse(localStorage.getItem('historialDB'));
+        if (historialDB === null) {
+            this.historial = [];
         } else {
-            console.error("localStorage no está soportado en este navegador.");
+            this.historial = historialDB;
         }
-    
-        // Comprobar si los datos ya están almacenados en localStorage
-        const temporaryData = localStorage.getItem('temporaryDB');
-        const historialData = localStorage.getItem('historialDB');
-    
-        if (temporaryData) {
-            console.log("Datos temporales encontrados:", JSON.parse(temporaryData));
-        } else {
-            console.log("No se encontraron datos temporales.");
-        }
-    
-        if (historialData) {
-            console.log("Historial encontrado:", JSON.parse(historialData));
-        } else {
-            console.log("No se encontró historial.");
-        }
-    }    
+        let temporaryDB = JSON.parse(localStorage.getItem('temporaryDB'));
+        if (temporaryDB !== null) {
+            this.operation = temporaryDB.operation;
+            this.result = temporaryDB.result;
+        }    
+    }
 });
