@@ -1,0 +1,10 @@
+{
+    "name": "Calculadora",
+    "short_name": "Calc",
+    "start_url": "/index.html",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#686868"
+    
+  }
+  
