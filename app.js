@@ -18,6 +18,7 @@ const app = new Vue({
             }
             this.operation += value; // Agrega el valor ingresado a la operación
             this.calculate(); // Calcula automáticamente después de agregar
+            this.scrollToEnd(); // Desplaza el input hacia la derecha
         },
         clearInput() {
             this.operation = '';
@@ -73,6 +74,7 @@ const app = new Vue({
         backspace() {
             this.operation = this.operation.slice(0, -1); // Elimina el último carácter
             this.calculate(); // Recalcula después de borrar
+            this.scrollToEnd(); // Desplaza el input hacia la derecha
         },
         scanBarcode(barcode) {
             const product = this.entrada.find(item => item.cBarras === barcode);
@@ -91,9 +93,16 @@ const app = new Vue({
                 }
                 this.barcode = ''; // Limpia el campo de código de barras después de usarlo
                 this.calculate(); // Recalcula después de agregar el precio
+                this.scrollToEnd(); // Desplaza el input hacia la derecha
             } else {
                 alert('Producto no encontrado'); // Alerta si el producto no se encuentra
             }
+        },
+        scrollToEnd() {
+            const displayInput = document.getElementById('display'); // Obtiene el elemento del input
+            setTimeout(() => {
+                displayInput.scrollLeft = displayInput.scrollWidth; // Desplaza el scroll al final
+            }, 0); // Ajuste el tiempo a 0 milisegundos
         },        
         isOperator(value) {
             return ['+', '-', '*', '/'].includes(value); // Verifica si es un operador
