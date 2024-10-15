@@ -10,6 +10,7 @@ const app = new Vue({
             // Puedes agregar más productos aquí
         ], // Lista de productos con código de barras
         historial: [],  // Almacena el historial de operaciones
+        temporary: [],  // Almacena temporalmente la operación actual y el resultado
     },
     methods: {
         append(value) {
@@ -122,7 +123,7 @@ const app = new Vue({
                 operation: this.operation,
                 result: this.result
             };
-            localStorage.setItem('temporaryDB', JSON.stringify(temporaryItem)); // Guarda temporalmente la operación y resultado
+            localStorage.setItem('temporaryDB', JSON.stringify(temporaryItem));
         },
         scrollToEnd() {
             const displayInput = document.getElementById('display'); // Obtiene el elemento del input
@@ -132,28 +133,20 @@ const app = new Vue({
         },        
         isOperator(value) {
             return ['+', '-', '*', '/'].includes(value); // Verifica si es un operador
-        },
-        loadTemporaryDB() {
-            const temporaryData = localStorage.getItem('temporaryDB'); // Obtiene datos del localStorage
-            if (temporaryData) {
-                const { operation, result } = JSON.parse(temporaryData); // Parsea los datos
-                this.operation = operation; // Carga la operación
-                this.result = result; // Carga el resultado
-                this.calculate(); // Recalcula si es necesario
-            }
-        },
-        loadHistorial() {
-            const historialData = localStorage.getItem('historialDB'); // Obtiene el historial del localStorage
-            if (historialData) {
-                this.historial = JSON.parse(historialData); // Carga el historial
-            }
         }
     },
-    mounted() {
-        this.loadTemporaryDB(); // Carga datos temporales al iniciar
-        this.loadHistorial(); // Carga historial al iniciar
-    },
-    created() {
-        this.loadHistorial(); // Carga historial al iniciar
+
+    created: function() {
+        let historialDB = JSON.parse(localStorage.getItem('historialDB'));
+        if (historialDB === null) {
+            this.historial = [];
+        } else {
+            this.historial = historialDB;
+        }
+        let temporaryDB = JSON.parse(localStorage.getItem('temporaryDB'));
+        if (temporaryDB !== null) {
+            this.operation = temporaryDB.operation;
+            this.result = temporaryDB.result;
+        }    
     }
 });
