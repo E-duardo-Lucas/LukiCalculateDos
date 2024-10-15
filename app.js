@@ -96,6 +96,7 @@ const app = new Vue({
                 this.scrollToEnd(); // Desplaza el input hacia la derecha
             } else {
                 alert('Producto no encontrado'); // Alerta si el producto no se encuentra
+                this.barcode = '';
             }
         },
         scrollToEnd() {
